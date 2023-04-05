@@ -1,4 +1,5 @@
-import { render } from '@testing-library/react';
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
 import Board from './Board';
 
 test('renders', () => {
@@ -29,4 +30,22 @@ test('that is render Board with props passed in', () => {
     const td = table.querySelectorAll('td')
     expect(rows.length).toBe(3);
     expect(td.length).toBe(9);
+    // for (let row of rows) {
+    //     expect(row).toBeEmpty()
+    // }
+})
+test('shows Cells components and updates board when clicked', () => {
+    //chanceLightStartsOn=0 garanties all cells will be on
+    const { getByRole, debug } = render(<Board nrows={2} ncols={2} chanceLightStartsOn={0} />);
+    // debug();
+    const table = getByRole('table');
+    const td = table.querySelectorAll('td')
+    expect(td[0]).toHaveClass('Cell Cell-lit')
+    fireEvent.click(td[0]);
+    //clicking changes the cell class on itself and the cells to the right and bottom
+    expect(td[0]).toHaveClass('Cell');
+    expect(td[1]).toHaveClass('Cell');
+    expect(td[2]).toHaveClass('Cell');
+    expect(td[3]).toHaveClass('Cell Cell-lit')
+
 })

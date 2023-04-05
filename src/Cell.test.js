@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import Cell from './Cell';
 
 test('renders', () => {
@@ -14,8 +14,11 @@ test('renders', () => {
 
 test('that is matches snapshot', () => {
     const { asFragment } = render(<Cell />);
-    console.log(asFragment)
     expect(asFragment()).toMatchSnapshot();
     //nothing really to getby since the td is empty.
 });
 
+test('td shows from Cell', () => {
+    const { getByTestId } = render(<Cell />);
+    const td = getByTestId('cell')
+})
